@@ -1,6 +1,6 @@
 # expenses
 
-A new Flutter project.
+Projeto de controle de finanças da Cod3r em flutter
 
 ## Getting Started
 
