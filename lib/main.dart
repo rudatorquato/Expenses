@@ -79,10 +79,18 @@ class MyHomePage extends StatelessWidget {
                     ),
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(e.title),
+                      Text(
+                        e.title,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       Text(
                         e.date.toString(),
+                        style: TextStyle(color: Colors.grey),
                       ),
                     ],
                   )
