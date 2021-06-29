@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:expenses/transaction/transaction_model.dart';
-import 'package:intl/intl.dart' show DateFormat;
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
