@@ -1,6 +1,6 @@
-import 'package:expenses/transaction/transaction_model.dart';
-import 'package:expenses/transaction/widgets/transaction_form_widget.dart';
-import 'package:expenses/transaction/widgets/transaction_list_widget.dart';
+import 'package:expenses/shared/models/transaction_model.dart';
+import 'package:expenses/transaction/widgets/form/transaction_form_widget.dart';
+import 'package:expenses/transaction/widgets/list/transaction_list_widget.dart';
 import 'package:flutter/material.dart';
 
 class TransactionUser extends StatefulWidget {

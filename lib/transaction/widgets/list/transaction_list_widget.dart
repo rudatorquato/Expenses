@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:expenses/transaction/transaction_model.dart';
+import 'package:expenses/shared/models/transaction_model.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:intl/intl.dart';
 
