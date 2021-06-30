@@ -60,8 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         builder: (_) {
           // ignore: avoid_init_to_null
-          var onSubmit = null;
-          return TransactionForm(onSubmit);
+          //var onSubmit = null;
+          return TransactionForm(_addTransaction);
         });
   }
 
