@@ -73,7 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Despesas Pessoais'),
+        title: Text(
+          'Despesas Pessoais',
+          style: AppTextStyles.openSans,
+        ),
         actions: [
           IconButton(
             onPressed: () => _openTransactionFormModal(context),

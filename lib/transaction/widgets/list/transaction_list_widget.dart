@@ -1,3 +1,4 @@
+import 'package:expenses/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:expenses/shared/models/transaction_model.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -48,10 +49,7 @@ class TransactionList extends StatelessWidget {
                     children: [
                       Text(
                         e.title,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: AppTextStyles.openSansNameProduct,
                       ),
                       Text(
                         DateFormat('d MMM y').format(e.date),
