@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:expenses/core/app_text_styles.dart';
+import 'package:expenses/home/widgets/chart/transaction_chart_widget.dart';
 import 'package:expenses/home/widgets/form/transaction_form_widget.dart';
 import 'package:expenses/home/widgets/list/transaction_list_widget.dart';
 import 'package:expenses/shared/models/transaction_model.dart';
@@ -15,19 +16,27 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'Novo tenis de corrida',
-    //   value: 310.10,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'orrida',
-    //   value: 210.10,
-    //   date: DateTime.now(),
-    //),
+    Transaction(
+      id: 't1',
+      title: 'Novo tenis de corrida',
+      value: 310.10,
+      date: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'orrida',
+      value: 210.10,
+      date: DateTime.now().subtract(Duration(days: 4)),
+    ),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((element) {
+      return element.date.isAfter(DateTime.now().subtract(
+        Duration(days: 7),
+      ));
+    }).toList();
+  }
 
   _addTransaction(String title, double value) {
     final newTransaction = Transaction(
@@ -73,14 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              width: double.infinity,
-              child: Card(
-                color: Colors.blue,
-                child: Text('Grafico'),
-                elevation: 5,
-              ),
-            ),
+            Chart(recentTransaction: _recentTransactions),
             TransactionList(transactions: _transactions),
           ],
         ),
