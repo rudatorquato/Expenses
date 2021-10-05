@@ -5,10 +5,12 @@ import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final void Function(String) onRemove;
 
   const TransactionList({
     Key? key,
     required this.transactions,
+    required this.onRemove,
   }) : super(key: key);
 
   @override
@@ -47,27 +49,31 @@ class TransactionList extends StatelessWidget {
                     horizontal: 5,
                   ),
                   child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 30,
-                      backgroundColor: Colors.purple[100],
-                      child: Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: FittedBox(
-                          child: Text(
-                            'R\$${e.value}',
-                            style: TextStyle(color: Colors.white),
+                      leading: CircleAvatar(
+                        radius: 30,
+                        backgroundColor: Colors.purple[100],
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: FittedBox(
+                            child: Text(
+                              'R\$${e.value}',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    title: Text(
-                      e.title,
-                      style: AppTextStyles.openSansNameProduct,
-                    ),
-                    subtitle: Text(
-                      DateFormat('d MMM y').format(e.date),
-                    ),
-                  ),
+                      title: Text(
+                        e.title,
+                        style: AppTextStyles.openSansNameProduct,
+                      ),
+                      subtitle: Text(
+                        DateFormat('d MMM y').format(e.date),
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        color: Theme.of(context).errorColor,
+                        onPressed: () => onRemove(e.id),
+                      )),
                 );
               },
             ),
