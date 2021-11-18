@@ -15,68 +15,65 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 500,
-      child: transactions.isEmpty
-          ? Column(
-              children: [
-                SizedBox(
-                  height: 20,
+    return transactions.isEmpty
+        ? Column(
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Nenhuma Transação Cadastrada',
+                style: AppTextStyles.openSansNameProduct,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                  height: 200,
+                  child: Image.asset(
+                    AppImages.waiting,
+                    fit: BoxFit.cover,
+                  ))
+            ],
+          )
+        : ListView.builder(
+            itemCount: transactions.length,
+            itemBuilder: (ctx, index) {
+              final e = transactions[index];
+              return Card(
+                elevation: 5,
+                margin: EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 5,
                 ),
-                Text(
-                  'Nenhuma Transação Cadastrada',
-                  style: AppTextStyles.openSansNameProduct,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                    height: 200,
-                    child: Image.asset(
-                      AppImages.waiting,
-                      fit: BoxFit.cover,
-                    ))
-              ],
-            )
-          : ListView.builder(
-              itemCount: transactions.length,
-              itemBuilder: (ctx, index) {
-                final e = transactions[index];
-                return Card(
-                  elevation: 5,
-                  margin: EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 5,
-                  ),
-                  child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 30,
-                        backgroundColor: Colors.purple[100],
-                        child: Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: FittedBox(
-                            child: Text(
-                              'R\$${e.value}',
-                              style: TextStyle(color: Colors.white),
-                            ),
+                child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.purple[100],
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: FittedBox(
+                          child: Text(
+                            'R\$${e.value}',
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
-                      title: Text(
-                        e.title,
-                        style: AppTextStyles.openSansNameProduct,
-                      ),
-                      subtitle: Text(
-                        DateFormat('d MMM y').format(e.date),
-                      ),
-                      trailing: IconButton(
-                        icon: Icon(Icons.delete),
-                        color: Theme.of(context).errorColor,
-                        onPressed: () => onRemove(e.id),
-                      )),
-                );
-              },
-            ),
-    );
+                    ),
+                    title: Text(
+                      e.title,
+                      style: AppTextStyles.openSansNameProduct,
+                    ),
+                    subtitle: Text(
+                      DateFormat('d MMM y').format(e.date),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () => onRemove(e.id),
+                    )),
+              );
+            },
+          );
   }
 }
