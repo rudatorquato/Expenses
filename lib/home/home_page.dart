@@ -63,12 +63,21 @@ class _MyHomePageState extends State<MyHomePage> {
         MediaQuery.of(context).orientation == Orientation.landscape;
 
     final appBar = AppBar(
-      title: Text('Despesas Pessoais', style: AppTextStyles.openSans
-          //TextStyle(
-          //fontSize: 20 * MediaQuery.of(context).textScaleFactor,
-          //),
-          ),
+      title: Text(
+        'Despesas Pessoais', style: AppTextStyles.openSans,
+        //TextStyle(
+        //fontSize: 20 * MediaQuery.of(context).textScaleFactor,
+        //),
+      ),
       actions: [
+        if (isLandscape)
+          IconButton(
+              icon: Icon(_showChart ? Icons.list : Icons.show_chart),
+              onPressed: () {
+                setState(() {
+                  _showChart = !_showChart;
+                });
+              }),
         IconButton(
           onPressed: () => _openTransactionFormModal(context),
           icon: Icon(Icons.add),
@@ -85,21 +94,21 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Exibir Gráfico"),
-                  Switch(
-                    value: _showChart,
-                    onChanged: (value) {
-                      setState(() {
-                        _showChart = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
+            //if (isLandscape)
+            //  Row(
+            //    mainAxisAlignment: MainAxisAlignment.center,
+            //    children: [
+            //      Text("Exibir Gráfico"),
+            //      Switch(
+            //        value: _showChart,
+            //        onChanged: (value) {
+            //          setState(() {
+            //            _showChart = value;
+            //          });
+            //        },
+            //      ),
+            //    ],
+            //  ),
             if (_showChart || !isLandscape)
               Container(
                 height: availabelHeight * (isLandscape ? 0.7 : 0.30),
