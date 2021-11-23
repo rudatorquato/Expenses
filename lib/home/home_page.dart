@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:expenses/core/app_text_styles.dart';
@@ -99,7 +100,8 @@ class _MyHomePageState extends State<MyHomePage> {
             //    mainAxisAlignment: MainAxisAlignment.center,
             //    children: [
             //      Text("Exibir Gráfico"),
-            //      Switch(
+            //      Switch.adaptative(
+            //activeColor: Theme.of(context).accentColor,)
             //        value: _showChart,
             //        onChanged: (value) {
             //          setState(() {
@@ -123,10 +125,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _openTransactionFormModal(context),
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              onPressed: () => _openTransactionFormModal(context),
+              child: Icon(Icons.add),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
