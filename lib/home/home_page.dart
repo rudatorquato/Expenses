@@ -6,6 +6,7 @@ import 'package:expenses/home/widgets/chart/transaction_chart_widget.dart';
 import 'package:expenses/home/widgets/form/transaction_form_widget.dart';
 import 'package:expenses/home/widgets/list/transaction_list_widget.dart';
 import 'package:expenses/shared/models/transaction_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -58,80 +59,98 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  Widget _getIconButton(IconData icon, Function() fn) {
+    return Platform.isIOS
+        ? GestureDetector(onTap: fn, child: Icon(icon))
+        : IconButton(icon: Icon(icon), onPressed: fn);
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     bool isLandscape = mediaQuery.orientation == Orientation.landscape;
 
-    final appBar = AppBar(
-      title: Text(
-        'Despesas Pessoais', style: AppTextStyles.openSans,
-        //TextStyle(
-        //fontSize: 20 * MediaQuery.of(context).textScaleFactor,
-        //),
-      ),
-      actions: [
-        if (isLandscape)
-          IconButton(
-              icon: Icon(_showChart ? Icons.list : Icons.show_chart),
-              onPressed: () {
-                setState(() {
-                  _showChart = !_showChart;
-                });
-              }),
-        IconButton(
-          onPressed: () => _openTransactionFormModal(context),
-          icon: Icon(Icons.add),
+    final actions = [
+      if (isLandscape)
+        _getIconButton(
+          _showChart ? Icons.list : Icons.show_chart,
+          () {
+            setState(() {
+              _showChart = !_showChart;
+            });
+          },
         ),
-      ],
+      _getIconButton(
+        Platform.isIOS ? CupertinoIcons.add : Icons.add,
+        () => _openTransactionFormModal(context),
+      ),
+    ];
+    final PreferredSizeWidget appBar = AppBar(
+      title: Text('Despesas Pessoais'),
+      actions: actions,
     );
-    final availabelHeight = mediaQuery.size.height -
+
+    final availableHeight = mediaQuery.size.height -
         appBar.preferredSize.height -
         mediaQuery.padding.top;
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            //if (isLandscape)
-            //  Row(
-            //    mainAxisAlignment: MainAxisAlignment.center,
-            //    children: [
-            //      Text("Exibir Gráfico"),
-            //      Switch.adaptative(
-            //activeColor: Theme.of(context).accentColor,)
-            //        value: _showChart,
-            //        onChanged: (value) {
-            //          setState(() {
-            //            _showChart = value;
-            //          });
-            //        },
-            //      ),
-            //    ],
-            //  ),
-            if (_showChart || !isLandscape)
-              Container(
-                height: availabelHeight * (isLandscape ? 0.8 : 0.20),
-                child: Chart(recentTransaction: _recentTransactions),
-              ),
-            if (!_showChart || !isLandscape)
-              Container(
-                height: availabelHeight * (isLandscape ? 1 : 0.70),
-                child: TransactionList(
-                    transactions: _transactions, onRemove: _removeTransaction),
-              ),
-          ],
-        ),
-      ),
-      floatingActionButton: Platform.isIOS
-          ? Container()
-          : FloatingActionButton(
-              onPressed: () => _openTransactionFormModal(context),
-              child: Icon(Icons.add),
+    final bodyPage = SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          //if (isLandscape)
+          //  Row(
+          //    mainAxisAlignment: MainAxisAlignment.center,
+          //    children: [
+          //      Text("Exibir Gráfico"),
+          //      Switch.adaptative(
+          //activeColor: Theme.of(context).accentColor,)
+          //        value: _showChart,
+          //        onChanged: (value) {
+          //          setState(() {
+          //            _showChart = value;
+          //          });
+          //        },
+          //      ),
+          //    ],
+          //  ),
+          if (_showChart || !isLandscape)
+            Container(
+              height: availableHeight * (isLandscape ? 0.8 : 0.20),
+              child: Chart(recentTransaction: _recentTransactions),
             ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          if (!_showChart || !isLandscape)
+            Container(
+              height: availableHeight * (isLandscape ? 1 : 0.70),
+              child: TransactionList(
+                  transactions: _transactions, onRemove: _removeTransaction),
+            ),
+        ],
+      ),
     );
+
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+              middle: Text('Despesas Pessoais'),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: actions,
+              ),
+            ),
+            child: bodyPage,
+          )
+        : Scaffold(
+            appBar: appBar,
+            body: bodyPage,
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
+                    child: Icon(Icons.add),
+                    onPressed: () => _openTransactionFormModal(context),
+                  ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+          );
   }
 }
