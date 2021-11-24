@@ -122,18 +122,6 @@ class _TransactionFormState extends State<TransactionForm> {
                     label: 'Nova Transação',
                     onPressed: _submitForm,
                   ),
-                  ElevatedButton(
-                    onPressed: _submitForm,
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.purple,
-                    ),
-                    child: Text(
-                      'Nova Transação',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ],

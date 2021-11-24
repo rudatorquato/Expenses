@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AdaptativeButton extends StatelessWidget {
-  final String label;
-  final Function onPressed;
+  final String? label;
+  final Function()? onPressed;
 
   const AdaptativeButton({
     Key? key,
@@ -16,24 +16,21 @@ class AdaptativeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Platform.isIOS
         ? CupertinoButton(
-            child: Text(label),
-            onPressed: onPressed(),
+            child: Text(label.toString()),
+            onPressed: onPressed,
             color: Theme.of(context).primaryColor,
             padding: EdgeInsets.symmetric(
               horizontal: 20,
             ),
           )
         : ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: Theme.of(context)
-                  .primaryColor, //change background color of button
-              onPrimary: Theme.of(context)
-                  .textTheme
-                  .button!
-                  .color, //change text color of button
+            child: Text(
+              label.toString(),
+              style: TextStyle(
+                color: Theme.of(context).textTheme.button?.color,
+              ),
             ),
-            child: Text(label),
-            onPressed: onPressed(),
+            onPressed: onPressed,
           );
   }
 }
