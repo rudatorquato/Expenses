@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:expenses/core/app_text_styles.dart';
+//import 'package:expenses/core/app_text_styles.dart';
 import 'package:expenses/home/widgets/chart/transaction_chart_widget.dart';
 import 'package:expenses/home/widgets/form/transaction_form_widget.dart';
 import 'package:expenses/home/widgets/list/transaction_list_widget.dart';
@@ -70,10 +70,15 @@ class _MyHomePageState extends State<MyHomePage> {
     final mediaQuery = MediaQuery.of(context);
     bool isLandscape = mediaQuery.orientation == Orientation.landscape;
 
+    final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
+
+    final chartList =
+        Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
+
     final actions = [
       if (isLandscape)
         _getIconButton(
-          _showChart ? Icons.list : Icons.show_chart,
+          _showChart ? iconList : chartList,
           () {
             setState(() {
               _showChart = !_showChart;
@@ -94,38 +99,40 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar.preferredSize.height -
         mediaQuery.padding.top;
 
-    final bodyPage = SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          //if (isLandscape)
-          //  Row(
-          //    mainAxisAlignment: MainAxisAlignment.center,
-          //    children: [
-          //      Text("Exibir Gráfico"),
-          //      Switch.adaptative(
-          //activeColor: Theme.of(context).accentColor,)
-          //        value: _showChart,
-          //        onChanged: (value) {
-          //          setState(() {
-          //            _showChart = value;
-          //          });
-          //        },
-          //      ),
-          //    ],
-          //  ),
-          if (_showChart || !isLandscape)
-            Container(
-              height: availableHeight * (isLandscape ? 0.8 : 0.20),
-              child: Chart(recentTransaction: _recentTransactions),
-            ),
-          if (!_showChart || !isLandscape)
-            Container(
-              height: availableHeight * (isLandscape ? 1 : 0.70),
-              child: TransactionList(
-                  transactions: _transactions, onRemove: _removeTransaction),
-            ),
-        ],
+    final bodyPage = SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            //if (isLandscape)
+            //  Row(
+            //    mainAxisAlignment: MainAxisAlignment.center,
+            //    children: [
+            //      Text("Exibir Gráfico"),
+            //      Switch.adaptative(
+            //activeColor: Theme.of(context).accentColor,)
+            //        value: _showChart,
+            //        onChanged: (value) {
+            //          setState(() {
+            //            _showChart = value;
+            //          });
+            //        },
+            //      ),
+            //    ],
+            //  ),
+            if (_showChart || !isLandscape)
+              Container(
+                height: availableHeight * (isLandscape ? 0.8 : 0.20),
+                child: Chart(recentTransaction: _recentTransactions),
+              ),
+            if (!_showChart || !isLandscape)
+              Container(
+                height: availableHeight * (isLandscape ? 1 : 0.70),
+                child: TransactionList(
+                    transactions: _transactions, onRemove: _removeTransaction),
+              ),
+          ],
+        ),
       ),
     );
 
