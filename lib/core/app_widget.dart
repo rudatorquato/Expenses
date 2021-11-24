@@ -12,7 +12,7 @@ class ExpensesApp extends StatelessWidget {
       theme: ThemeData(
         //primarySwatch: Colors.purple,
         primaryColor: Colors.purple[600],
-        //accentColor: Colors.purple[100],
+        accentColor: Colors.purple[100],
       ),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
