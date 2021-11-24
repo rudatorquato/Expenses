@@ -24,10 +24,13 @@ class AdaptativeButton extends StatelessWidget {
             ),
           )
         : ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.purple[100],
+            ),
             child: Text(
               label.toString(),
               style: TextStyle(
-                color: Theme.of(context).textTheme.button?.color,
+                color: Colors.white,
               ),
             ),
             onPressed: onPressed,

@@ -40,12 +40,12 @@ class _TransactionFormState extends State<TransactionForm> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-              primary: Colors.purple,
+              primary: Colors.purple.shade100,
               onPrimary: Colors.white,
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: Colors.purple,
+                primary: Colors.white,
                 backgroundColor: Colors.purple[100],
               ),
             ),
@@ -107,7 +107,7 @@ class _TransactionFormState extends State<TransactionForm> {
                       child: Text(
                         'Selecionar data',
                         style: TextStyle(
-                          color: Colors.purple,
+                          color: Colors.purple[100],
                           fontWeight: FontWeight.bold,
                         ),
                       ),
